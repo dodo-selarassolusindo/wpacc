@@ -7,39 +7,39 @@ use App\Controllers\BaseController;
 
 use App\Models\GrupAkunModel;
 
-class GrupAkun extends BaseController
+class Grupakun extends BaseController
 {
-	
+
     protected $grupAkunModel;
     protected $validation;
-	
+
 	public function __construct()
 	{
 	    $this->grupAkunModel = new GrupAkunModel();
        	$this->validation =  \Config\Services::validation();
-		
+
 	}
-	
+
 	public function index()
 	{
 
 	    $data = [
                 'controller'    	=> 'grupAkun',
-                'title'     		=> 'Grup Akun'				
+                'title'     		=> 'Grup Akun'
 			];
-		
+
 		return view('grupAkun', $data);
-			
+
 	}
 
 	public function getAll()
 	{
- 		$response = $data['data'] = array();	
+ 		$response = $data['data'] = array();
 
 		$result = $this->grupAkunModel->select()->findAll();
-		
+
 		foreach ($result as $key => $value) {
-							
+
 			$ops = '<div class="btn-group">';
 			$ops .= '<button type="button" class=" btn btn-sm dropdown-toggle btn-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 			$ops .= '<i class="fa-solid fa-pen-square"></i>  </button>';
@@ -54,30 +54,30 @@ class GrupAkun extends BaseController
 				$value->kode,
 $value->nama,
 
-				$ops				
+				$ops
 			);
-		} 
+		}
 
-		return $this->response->setJSON($data);		
+		return $this->response->setJSON($data);
 	}
-	
+
 	public function getOne()
 	{
  		$response = array();
-		
+
 		$id = $this->request->getPost('id');
-		
+
 		if ($this->validation->check($id, 'required|numeric')) {
-			
+
 			$data = $this->grupAkunModel->where('id' ,$id)->first();
-			
-			return $this->response->setJSON($data);	
-				
+
+			return $this->response->setJSON($data);
+
 		} else {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-		}	
-		
-	}	
+		}
+
+	}
 
 	public function add()
 	{
@@ -98,29 +98,29 @@ $fields['nama'] = $this->request->getPost('nama');
 
             $response['success'] = false;
 			$response['messages'] = $this->validation->getErrors();//Show Error in Input Form
-			
+
         } else {
 
             if ($this->grupAkunModel->insert($fields)) {
-												
+
                 $response['success'] = true;
-                $response['messages'] = lang("App.insert-success") ;	
-				
+                $response['messages'] = lang("App.insert-success") ;
+
             } else {
-				
+
                 $response['success'] = false;
                 $response['messages'] = lang("App.insert-error") ;
-				
+
             }
         }
-		
+
         return $this->response->setJSON($response);
 	}
 
 	public function edit()
 	{
         $response = array();
-		
+
 		$fields['id'] = $this->request->getPost('id');
 $fields['kode'] = $this->request->getPost('kode');
 $fields['nama'] = $this->request->getPost('nama');
@@ -140,47 +140,47 @@ $fields['nama'] = $this->request->getPost('nama');
         } else {
 
             if ($this->grupAkunModel->update($fields['id'], $fields)) {
-				
+
                 $response['success'] = true;
-                $response['messages'] = lang("App.update-success");	
-				
+                $response['messages'] = lang("App.update-success");
+
             } else {
-				
+
                 $response['success'] = false;
                 $response['messages'] = lang("App.update-error");
-				
+
             }
         }
-		
-        return $this->response->setJSON($response);	
+
+        return $this->response->setJSON($response);
 	}
-	
+
 	public function remove()
 	{
 		$response = array();
-		
+
 		$id = $this->request->getPost('id');
-		
+
 		if (!$this->validation->check($id, 'required|numeric')) {
 
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-			
-		} else {	
-		
+
+		} else {
+
 			if ($this->grupAkunModel->where('id', $id)->delete()) {
-								
+
 				$response['success'] = true;
-				$response['messages'] = lang("App.delete-success");	
-				
+				$response['messages'] = lang("App.delete-success");
+
 			} else {
-				
+
 				$response['success'] = false;
 				$response['messages'] = lang("App.delete-error");
-				
+
 			}
-		}	
-	
-        return $this->response->setJSON($response);		
-	}	
-		
-}	
+		}
+
+        return $this->response->setJSON($response);
+	}
+
+}
