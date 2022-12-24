@@ -31,7 +31,9 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
+                            <?php if ($title != 'Dashboard') { ?>
                             <li class="breadcrumb-item active" aria-current="page"><?= esc($title) ?></li>
+                            <?php } ?>
                         </ol>
                     </div>
                 </div>

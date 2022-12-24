@@ -1,6 +1,6 @@
 <!-- Main Sidebar Container -->
 <!--<aside class="main-sidebar sidebar-bg-dark sidebar-color-primary shadow">-->
-<aside class="main-sidebar sidebar-bg-light sidebar-color-primary shadow">
+<aside class="main-sidebar sidebar-bg-dark sidebar-color-primary shadow">
     <div class="brand-container">
         <a href="javascript:;" class="brand-link">
             <img src="<?= base_url('asset/img/AdminLTELogo.png') ?>" alt="AdminLTE Logo" class="brand-image opacity-80 shadow">
@@ -11,11 +11,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <nav class="mt-2">
+            <?php $request = \Config\Services::request(); ?>
             <!-- Sidebar Menu -->
             <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item menu-open">
-                    <a href="javascript:;" class="nav-link active">
+                    <!-- <a href="javascript:;" class="nav-link active"> -->
+                    <a href="<?= site_url() ?>" class="nav-link <?= $request->uri->getSegment(1) == '' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-circle"></i>
                         <p>
                             Dashboard
@@ -23,8 +25,24 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                <li class="nav-item
+                <?php
+                switch ($request->uri->getSegment(1)) {
+                    case 'rubrik':
+                        echo ' menu-open ';
+                        break;
+                }
+                ?>
+                ">
+                    <a href="javascript:;" class="nav-link
+                    <?php
+                    switch ($request->uri->getSegment(1)) {
+                        case 'rubrik':
+                            echo 'active';
+                            break;
+                    }
+                    ?>
+                    ">
                         <i class="nav-icon fas fa-circle"></i>
                         <p>
                             Master
@@ -33,7 +51,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="javascript:;" class="nav-link">
+                            <!-- <a href="<?= site_url('rubrik') ?>" class="nav-link"> -->
+                            <a href="<?= site_url('rubrik') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'rubrik' ? 'active' : '' ?>">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>Kategori</p>
                             </a>
