@@ -4,7 +4,7 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class GrupAkunModel extends Model {
+class GrupakunModel extends Model {
     
 	protected $table = 'grup_akun';
 	protected $primaryKey = 'id';
