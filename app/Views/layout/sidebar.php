@@ -15,7 +15,7 @@
             <!-- Sidebar Menu -->
             <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
-                <li class="nav-item menu-open">
+                <li class="nav-item">
                     <!-- <a href="javascript:;" class="nav-link active"> -->
                     <a href="<?= site_url() ?>" class="nav-link <?= $request->uri->getSegment(1) == '' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-circle"></i>
