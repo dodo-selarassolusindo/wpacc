@@ -16,7 +16,6 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <!-- <a href="javascript:;" class="nav-link active"> -->
                     <a href="<?= site_url() ?>" class="nav-link <?= $request->uri->getSegment(1) == '' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-circle"></i>
                         <p>
@@ -28,7 +27,8 @@
                 <li class="nav-item
                 <?php
                 switch ($request->uri->getSegment(1)) {
-                    case 'rubrik':
+                    case 'grupakun':
+                    case 'akun':
                         echo ' menu-open ';
                         break;
                 }
@@ -37,7 +37,8 @@
                     <a href="javascript:;" class="nav-link
                     <?php
                     switch ($request->uri->getSegment(1)) {
-                        case 'rubrik':
+                        case 'grupakun':
+                        case 'akun':
                             echo 'active';
                             break;
                     }
@@ -51,16 +52,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <!-- <a href="<?= site_url('rubrik') ?>" class="nav-link"> -->
-                            <a href="<?= site_url('rubrik') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'rubrik' ? 'active' : '' ?>">
+                            <a href="<?= site_url('grupakun') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'grupakun' ? 'active' : '' ?>">
                                 <i class="nav-icon far fa-circle"></i>
-                                <p>Kategori</p>
+                                <p>Grup Akun</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="javascript:;" class="nav-link">
+                            <a href="<?= site_url('akun') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'akun' ? 'active' : '' ?>">
                                 <i class="nav-icon far fa-circle"></i>
-                                <p>Perkiraan</p>
+                                <p>Akun</p>
                             </a>
                         </li>
                     </ul>
