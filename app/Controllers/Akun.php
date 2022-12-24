@@ -6,40 +6,44 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 
 use App\Models\AkunModel;
+use App\Models\GrupakunModel;
 
 class Akun extends BaseController
 {
-	
+
     protected $akunModel;
     protected $validation;
-	
+
 	public function __construct()
 	{
 	    $this->akunModel = new AkunModel();
+		$this->grupakunModel = new GrupakunModel();
        	$this->validation =  \Config\Services::validation();
-		
+
 	}
-	
+
 	public function index()
 	{
 
 	    $data = [
-                'controller'    	=> 'akun',
-                'title'     		=> 'Akun'				
-			];
-		
+            'controller' => 'akun',
+            'title'	=> 'Akun',
+			'dataGrupAkun' => $this->grupakunModel->findAll(),
+		];
+
 		return view('akun', $data);
-			
+
 	}
 
 	public function getAll()
 	{
- 		$response = $data['data'] = array();	
+ 		$response = $data['data'] = array();
 
-		$result = $this->akunModel->select()->findAll();
-		
+		// $result = $this->akunModel->select()->findAll();
+		$result = $this->akunModel->select('akun_baru.*, grup_akun.nama as grup_akun_nama')->join('grup_akun', 'akun_baru.grup_akun = grup_akun.id', 'left')->findAll();
+
 		foreach ($result as $key => $value) {
-							
+
 			$ops = '<div class="btn-group">';
 			$ops .= '<button type="button" class=" btn btn-sm dropdown-toggle btn-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 			$ops .= '<i class="fa-solid fa-pen-square"></i>  </button>';
@@ -51,7 +55,7 @@ class Akun extends BaseController
 			$ops .= '</div></div>';
 
 			$data['data'][$key] = array(
-				$value->grup_akun,
+				$value->grup_akun_nama,
 $value->kode,
 $value->nama,
 $value->debet_lalu,
@@ -60,30 +64,30 @@ $value->debet_ini,
 $value->kredit_ini,
 $value->bulan_tahun,
 
-				$ops				
+				$ops
 			);
-		} 
+		}
 
-		return $this->response->setJSON($data);		
+		return $this->response->setJSON($data);
 	}
-	
+
 	public function getOne()
 	{
  		$response = array();
-		
+
 		$id = $this->request->getPost('id');
-		
+
 		if ($this->validation->check($id, 'required|numeric')) {
-			
+
 			$data = $this->akunModel->where('id' ,$id)->first();
-			
-			return $this->response->setJSON($data);	
-				
+
+			return $this->response->setJSON($data);
+
 		} else {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-		}	
-		
-	}	
+		}
+
+	}
 
 	public function add()
 	{
@@ -116,29 +120,29 @@ $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
 
             $response['success'] = false;
 			$response['messages'] = $this->validation->getErrors();//Show Error in Input Form
-			
+
         } else {
 
             if ($this->akunModel->insert($fields)) {
-												
+
                 $response['success'] = true;
-                $response['messages'] = lang("App.insert-success") ;	
-				
+                $response['messages'] = lang("App.insert-success") ;
+
             } else {
-				
+
                 $response['success'] = false;
                 $response['messages'] = lang("App.insert-error") ;
-				
+
             }
         }
-		
+
         return $this->response->setJSON($response);
 	}
 
 	public function edit()
 	{
         $response = array();
-		
+
 		$fields['id'] = $this->request->getPost('id');
 $fields['grup_akun'] = $this->request->getPost('grup_akun');
 $fields['kode'] = $this->request->getPost('kode');
@@ -170,47 +174,47 @@ $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
         } else {
 
             if ($this->akunModel->update($fields['id'], $fields)) {
-				
+
                 $response['success'] = true;
-                $response['messages'] = lang("App.update-success");	
-				
+                $response['messages'] = lang("App.update-success");
+
             } else {
-				
+
                 $response['success'] = false;
                 $response['messages'] = lang("App.update-error");
-				
+
             }
         }
-		
-        return $this->response->setJSON($response);	
+
+        return $this->response->setJSON($response);
 	}
-	
+
 	public function remove()
 	{
 		$response = array();
-		
+
 		$id = $this->request->getPost('id');
-		
+
 		if (!$this->validation->check($id, 'required|numeric')) {
 
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-			
-		} else {	
-		
+
+		} else {
+
 			if ($this->akunModel->where('id', $id)->delete()) {
-								
+
 				$response['success'] = true;
-				$response['messages'] = lang("App.delete-success");	
-				
+				$response['messages'] = lang("App.delete-success");
+
 			} else {
-				
+
 				$response['success'] = false;
 				$response['messages'] = lang("App.delete-error");
-				
+
 			}
-		}	
-	
-        return $this->response->setJSON($response);		
-	}	
-		
-}	
+		}
+
+        return $this->response->setJSON($response);
+	}
+
+}
