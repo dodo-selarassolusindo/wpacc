@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2022 at 01:44 PM
+-- Generation Time: Dec 24, 2022 at 06:48 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -24,6 +24,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `akun_baru`
+--
+
+CREATE TABLE `akun_baru` (
+  `id` int(11) NOT NULL,
+  `grup_akun` int(11) NOT NULL,
+  `kode` varchar(4) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `debet_lalu` double NOT NULL,
+  `kredit_lalu` double NOT NULL,
+  `debet_ini` double NOT NULL,
+  `kredit_ini` double NOT NULL,
+  `bulan_tahun` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `akun_lama`
+--
+
+CREATE TABLE `akun_lama` (
+  `id` int(11) NOT NULL,
+  `grup_akun` int(11) NOT NULL,
+  `kode` varchar(4) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `debet_lalu` double NOT NULL,
+  `kredit_lalu` double NOT NULL,
+  `debet_ini` double NOT NULL,
+  `kredit_ini` double NOT NULL,
+  `bulan_tahun` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -40,6 +76,33 @@ CREATE TABLE `groups` (
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Administrator'),
 (2, 'members', 'General User');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grup_akun`
+--
+
+CREATE TABLE `grup_akun` (
+  `id` int(11) NOT NULL,
+  `kode` varchar(2) NOT NULL,
+  `nama` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `grup_akun`
+--
+
+INSERT INTO `grup_akun` (`id`, `kode`, `nama`) VALUES
+(1, '01', 'AKTIVA LANCAR'),
+(2, '02', 'AKTIVA TETAP'),
+(3, '03', 'AKTIVA LAIN-LAIN'),
+(4, '11', 'HUTANG JANGKA PENDEK'),
+(5, '12', 'HUTANG JANGKA PANJANG'),
+(6, '13', 'MODAL'),
+(7, '21', 'PENDAPATAN USAHA'),
+(8, '31', 'HARGA POKOK PENJUALAN'),
+(9, '32', 'BIAYA-BIAYA');
 
 -- --------------------------------------------------------
 
@@ -141,9 +204,27 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 --
 
 --
+-- Indexes for table `akun_baru`
+--
+ALTER TABLE `akun_baru`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `akun_lama`
+--
+ALTER TABLE `akun_lama`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `grup_akun`
+--
+ALTER TABLE `grup_akun`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -182,10 +263,28 @@ ALTER TABLE `users_groups`
 --
 
 --
+-- AUTO_INCREMENT for table `akun_baru`
+--
+ALTER TABLE `akun_baru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `akun_lama`
+--
+ALTER TABLE `akun_lama`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `grup_akun`
+--
+ALTER TABLE `grup_akun`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `login_attempts`
