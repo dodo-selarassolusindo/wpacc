@@ -5,41 +5,41 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-use App\Models\JurnalModel;
+use App\Models\JurnaldetailModel;
 
-class Jurnal extends BaseController
+class Jurnaldetail extends BaseController
 {
-
-    protected $jurnalModel;
+	
+    protected $jurnaldetailModel;
     protected $validation;
-
+	
 	public function __construct()
 	{
-	    $this->jurnalModel = new JurnalModel();
+	    $this->jurnaldetailModel = new JurnaldetailModel();
        	$this->validation =  \Config\Services::validation();
-
+		
 	}
-
+	
 	public function index()
 	{
 
 	    $data = [
-                'controller'    	=> 'jurnal',
-                'title'     		=> 'Jurnal'
+                'controller'    	=> 'jurnaldetail',
+                'title'     		=> 'Jurnal Detail'				
 			];
-
-		return view('jurnal', $data);
-
+		
+		return view('jurnaldetail', $data);
+			
 	}
 
 	public function getAll()
 	{
- 		$response = $data['data'] = array();
+ 		$response = $data['data'] = array();	
 
-		$result = $this->jurnalModel->select()->findAll();
-
+		$result = $this->jurnaldetailModel->select()->findAll();
+		
 		foreach ($result as $key => $value) {
-
+							
 			$ops = '<div class="btn-group">';
 			$ops .= '<button type="button" class=" btn btn-sm dropdown-toggle btn-info" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 			$ops .= '<i class="fa-solid fa-pen-square"></i>  </button>';
@@ -51,51 +51,51 @@ class Jurnal extends BaseController
 			$ops .= '</div></div>';
 
 			$data['data'][$key] = array(
-				$value->nomor,
-$value->tanggal,
-$value->keterangan,
+				$value->akun,
+$value->debet,
+$value->kredit,
 
-				$ops
+				$ops				
 			);
-		}
+		} 
 
-		return $this->response->setJSON($data);
+		return $this->response->setJSON($data);		
 	}
-
+	
 	public function getOne()
 	{
  		$response = array();
-
+		
 		$id = $this->request->getPost('id');
-
+		
 		if ($this->validation->check($id, 'required|numeric')) {
-
-			$data = $this->jurnalModel->where('id' ,$id)->first();
-
-			return $this->response->setJSON($data);
-
+			
+			$data = $this->jurnaldetailModel->where('id' ,$id)->first();
+			
+			return $this->response->setJSON($data);	
+				
 		} else {
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-		}
-
-	}
+		}	
+		
+	}	
 
 	public function add()
 	{
         $response = array();
 
 		$fields['id'] = $this->request->getPost('id');
-$fields['nomor'] = $this->request->getPost('nomor');
-$fields['tanggal'] = $this->request->getPost('tanggal');
-$fields['keterangan'] = $this->request->getPost('keterangan');
-$fields['bulan_tahun'] = substr($this->request->getPost('tanggal'), 5, 2) . substr($this->request->getPost('tanggal'), 2, 2);
+$fields['jurnal'] = $this->request->getPost('jurnal');
+$fields['akun'] = $this->request->getPost('akun');
+$fields['debet'] = $this->request->getPost('debet');
+$fields['kredit'] = $this->request->getPost('kredit');
 
 
         $this->validation->setRules([
-			            'nomor' => ['label' => 'Nomor', 'rules' => 'required|min_length[0]|max_length[7]'],
-            'tanggal' => ['label' => 'Tanggal', 'rules' => 'required|valid_date|min_length[0]'],
-            'keterangan' => ['label' => 'Keterangan', 'rules' => 'required|min_length[0]'],
-            'bulan_tahun' => ['label' => 'Bulan & Tahun', 'rules' => 'permit_empty|min_length[0]|max_length[4]'],
+			            'jurnal' => ['label' => 'Jurnal', 'rules' => 'required|numeric|min_length[0]|max_length[11]'],
+            'akun' => ['label' => 'Akun', 'rules' => 'required|min_length[0]|max_length[11]'],
+            'debet' => ['label' => 'Debet', 'rules' => 'required|numeric|min_length[0]'],
+            'kredit' => ['label' => 'Kredit', 'rules' => 'required|numeric|min_length[0]'],
 
         ]);
 
@@ -103,41 +103,41 @@ $fields['bulan_tahun'] = substr($this->request->getPost('tanggal'), 5, 2) . subs
 
             $response['success'] = false;
 			$response['messages'] = $this->validation->getErrors();//Show Error in Input Form
-
+			
         } else {
 
-            if ($this->jurnalModel->insert($fields)) {
-
+            if ($this->jurnaldetailModel->insert($fields)) {
+												
                 $response['success'] = true;
-                $response['messages'] = lang("App.insert-success") ;
-
+                $response['messages'] = lang("App.insert-success") ;	
+				
             } else {
-
+				
                 $response['success'] = false;
                 $response['messages'] = lang("App.insert-error") ;
-
+				
             }
         }
-
+		
         return $this->response->setJSON($response);
 	}
 
 	public function edit()
 	{
         $response = array();
-
+		
 		$fields['id'] = $this->request->getPost('id');
-$fields['nomor'] = $this->request->getPost('nomor');
-$fields['tanggal'] = $this->request->getPost('tanggal');
-$fields['keterangan'] = $this->request->getPost('keterangan');
-$fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
+$fields['jurnal'] = $this->request->getPost('jurnal');
+$fields['akun'] = $this->request->getPost('akun');
+$fields['debet'] = $this->request->getPost('debet');
+$fields['kredit'] = $this->request->getPost('kredit');
 
 
         $this->validation->setRules([
-			            'nomor' => ['label' => 'Nomor', 'rules' => 'required|min_length[0]|max_length[7]'],
-            'tanggal' => ['label' => 'Tanggal', 'rules' => 'required|valid_date|min_length[0]'],
-            'keterangan' => ['label' => 'Keterangan', 'rules' => 'required|min_length[0]'],
-            'bulan_tahun' => ['label' => 'Bulan & Tahun', 'rules' => 'permit_empty|min_length[0]|max_length[4]'],
+			            'jurnal' => ['label' => 'Jurnal', 'rules' => 'required|numeric|min_length[0]|max_length[11]'],
+            'akun' => ['label' => 'Akun', 'rules' => 'required|min_length[0]|max_length[11]'],
+            'debet' => ['label' => 'Debet', 'rules' => 'required|numeric|min_length[0]'],
+            'kredit' => ['label' => 'Kredit', 'rules' => 'required|numeric|min_length[0]'],
 
         ]);
 
@@ -148,48 +148,48 @@ $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
 
         } else {
 
-            if ($this->jurnalModel->update($fields['id'], $fields)) {
-
+            if ($this->jurnaldetailModel->update($fields['id'], $fields)) {
+				
                 $response['success'] = true;
-                $response['messages'] = lang("App.update-success");
-
+                $response['messages'] = lang("App.update-success");	
+				
             } else {
-
+				
                 $response['success'] = false;
                 $response['messages'] = lang("App.update-error");
-
+				
             }
         }
-
-        return $this->response->setJSON($response);
+		
+        return $this->response->setJSON($response);	
 	}
-
+	
 	public function remove()
 	{
 		$response = array();
-
+		
 		$id = $this->request->getPost('id');
-
+		
 		if (!$this->validation->check($id, 'required|numeric')) {
 
 			throw new \CodeIgniter\Exceptions\PageNotFoundException();
-
-		} else {
-
-			if ($this->jurnalModel->where('id', $id)->delete()) {
-
+			
+		} else {	
+		
+			if ($this->jurnaldetailModel->where('id', $id)->delete()) {
+								
 				$response['success'] = true;
-				$response['messages'] = lang("App.delete-success");
-
+				$response['messages'] = lang("App.delete-success");	
+				
 			} else {
-
+				
 				$response['success'] = false;
 				$response['messages'] = lang("App.delete-error");
-
+				
 			}
-		}
-
-        return $this->response->setJSON($response);
-	}
-
-}
+		}	
+	
+        return $this->response->setJSON($response);		
+	}	
+		
+}	

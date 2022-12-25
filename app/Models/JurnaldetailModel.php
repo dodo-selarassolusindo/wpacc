@@ -4,13 +4,13 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class JurnalModel extends Model {
+class JurnaldetailModel extends Model {
     
-	protected $table = 'jurnal';
+	protected $table = 'jurnal_detail';
 	protected $primaryKey = 'id';
 	protected $returnType = 'object';
 	protected $useSoftDeletes = false;
-	protected $allowedFields = ['nomor', 'tanggal', 'keterangan', 'bulan_tahun'];
+	protected $allowedFields = ['jurnal', 'akun', 'debet', 'kredit'];
 	protected $useTimestamps = false;
 	protected $createdField  = 'created_at';
 	protected $updatedField  = 'updated_at';

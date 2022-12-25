@@ -7,7 +7,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-10 mt-2">
-              <h3 class="card-title">Jurnal</h3>
+              <h3 class="card-title">Jurnal Detail</h3>
             </div>
             <div class="col-2">
               <button type="button" class="btn float-right btn-success" onclick="save()" title="<?= lang("App.new") ?>"> <i class="fa fa-plus"></i>   <?= lang('App.new') ?></button>
@@ -19,9 +19,9 @@
           <table id="data_table" class="table table-bordered table-striped">
             <thead>
               <tr>
-              <th>Nomor</th>
-<th>Tanggal</th>
-<th>Keterangan</th>
+              <th>Akun</th>
+<th>Debet</th>
+<th>Kredit</th>
 
 			  <th></th>
               </tr>
@@ -49,28 +49,32 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group mb-3">
-									<label for="nomor" class="col-form-label"> Nomor: <span class="text-danger">*</span> </label>
-									<input type="text" id="nomor" name="nomor" class="form-control" placeholder="Nomor" minlength="0"  maxlength="7" required>
-								</div>
-							</div>
-<div class="col-md-12">
-								<div class="form-group mb-3">
-									<label for="tanggal" class="col-form-label"> Tanggal: <span class="text-danger">*</span> </label>
-									<input type="date" id="tanggal" name="tanggal" class="form-control" dateISO="true" required>
+									<label for="jurnal" class="col-form-label"> Jurnal: <span class="text-danger">*</span> </label>
+									<input type="number" id="jurnal" name="jurnal" class="form-control" placeholder="Jurnal" minlength="0"  maxlength="11" required>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group mb-3">
-									<label for="keterangan" class="col-form-label"> Keterangan: <span class="text-danger">*</span> </label>
-									<textarea cols="40" rows="5" id="keterangan" name="keterangan" class="form-control" placeholder="Keterangan" minlength="0"  required></textarea>
+									<label for="akun" class="col-form-label"> Akun: <span class="text-danger">*</span> </label>
+									<select id="akun" name="akun" class="form-select" required>
+										<option value="select1">select1</option>
+										<option value="select2">select2</option>
+										<option value="select3">select3</option>
+									</select>
 								</div>
 							</div>
-							<!-- <div class="col-md-12">
+							<div class="col-md-12">
 								<div class="form-group mb-3">
-									<label for="bulan_tahun" class="col-form-label"> Bulan & Tahun: </label>
-									<input type="text" id="bulan_tahun" name="bulan_tahun" class="form-control" placeholder="Bulan & Tahun" minlength="0"  maxlength="4" >
+									<label for="debet" class="col-form-label"> Debet: <span class="text-danger">*</span> </label>
+									<input type="number" id="debet" name="debet" class="form-control" placeholder="Debet" minlength="0"  required>
 								</div>
-							</div> -->
+							</div>
+							<div class="col-md-12">
+								<div class="form-group mb-3">
+									<label for="kredit" class="col-form-label"> Kredit: <span class="text-danger">*</span> </label>
+									<input type="number" id="kredit" name="kredit" class="form-control" placeholder="Kredit" minlength="0"  required>
+								</div>
+							</div>
 						</div>
 
           <div class="form-group text-center">
@@ -129,7 +133,7 @@
   }
 
   function save(id) {
-    // reset the form
+    // reset the form 
     $("#data-form")[0].reset();
     $(".form-control").removeClass('is-invalid').removeClass('is-valid');
     if (typeof id === 'undefined' || id < 1) { //add
@@ -156,10 +160,10 @@
           $('#data-modal').modal('show');
           //insert data to form
           			$("#data-form #id").val(response.id);
-			$("#data-form #nomor").val(response.nomor);
-			$("#data-form #tanggal").val(response.tanggal);
-			$("#data-form #keterangan").val(response.keterangan);
-			$("#data-form #bulan_tahun").val(response.bulan_tahun);
+			$("#data-form #jurnal").val(response.jurnal);
+			$("#data-form #akun").val(response.akun);
+			$("#data-form #debet").val(response.debet);
+			$("#data-form #kredit").val(response.kredit);
 
         }
       });
