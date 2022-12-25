@@ -176,7 +176,7 @@ function deleteRow(index)
 {
 	$('#tableRow'+index).remove();
     //--i;
-    // calculate();
+    hitungTotalDebet();
 }
 
 // dataTables
