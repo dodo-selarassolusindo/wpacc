@@ -20,13 +20,21 @@ class Jurnal extends BaseController
 
 	}
 
+	public function getNomor($tanggal = null)
+    {
+        // echo $this->t30joborderModel->getNomorJo(date('d-m-Y'));
+        $tanggal = $tanggal == null ? date('Y-m-d') : $tanggal;
+        return $this->jurnalModel->getNomor($tanggal);
+    }
+
 	public function index()
 	{
 
 	    $data = [
-                'controller'    	=> 'jurnal',
-                'title'     		=> 'Jurnal'
-			];
+            'controller' => 'jurnal',
+            'title' => 'Jurnal',
+			'nomor' => $this->jurnalModel->getNomor(date('Y-m-d')),
+		];
 
 		return view('jurnal', $data);
 
