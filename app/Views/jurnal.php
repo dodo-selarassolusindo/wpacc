@@ -130,6 +130,20 @@
 <?= $this->section("pageScript") ?>
 <script>
 
+function hitungTotalKredit() // tested, ok
+{
+	var total_kredit = 0;
+	$(".kredit").each(function(){
+		// totalDebet += parseInt($(this).val().replace(/\D/g,''));
+        total_kredit += parseInt($(this).val());
+	});
+
+	$('#total_kredit').val(total_kredit);
+	// $('#totalbayar_real').val(total_bayar);
+
+	// hitungSisaBayar();
+}
+
 function hitungTotalDebet() // tested, ok
 {
 	var total_debet = 0;
@@ -164,7 +178,7 @@ function addRow()
                 <input onkeyup="hitungTotalDebet()" type="text" name="debet[]" class="form-control debet" placeholder="Debet" minlength="0"  maxlength="25" required>
             </td>
             <td>
-                <input type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
+                <input onkeyup="hitungTotalKredit()" type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
             </td>
             <td><a href="#" onclick="deleteRow(`+i+`)" class="text-danger">Hapus</a></td>
         </tr>`;
@@ -177,6 +191,7 @@ function deleteRow(index)
 	$('#tableRow'+index).remove();
     //--i;
     hitungTotalDebet();
+    hitungTotalKredit();
 }
 
 // dataTables
@@ -252,7 +267,7 @@ function save(id) {
                     <input onkeyup="hitungTotalDebet()" type="text" name="debet[]" class="form-control debet" placeholder="Debet" minlength="0"  maxlength="25" required>
                 </td>
                 <td>
-                    <input type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
+                    <input onkeyup="hitungTotalKredit()" type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
                 </td>
                 <td>&nbsp;</td>
             </tr>`;
