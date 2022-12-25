@@ -33,4 +33,21 @@
     <link rel="stylesheet" href="<?= base_url('asset/plugins/datatables/StateRestore-1.1.1/css/stateRestore.bootstrap5.min.css') ?>">
     <!-- Dark style -->
     <!--<link rel="stylesheet" href="<?php /* echo base_url('asset/css/dark/adminlte-dark-addon.min.css')*/ ?>">  -->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url('asset/plugins/select2/css/select2.min.css') ?>">
+
+    <style media="screen">
+        .select2-container {
+            width: 100%!important;
+            height: 38px!important;
+        }
+
+        .select2-selection--single {
+            height: 38px!important;
+        }
+
+        /* .select2-search--dropdown .select2-search__field {
+        width: 98%;
+        } */
+    </style>
 </head>

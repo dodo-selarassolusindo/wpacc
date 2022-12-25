@@ -77,9 +77,9 @@
                                 <table id="data_table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Akun</th>
-                                            <th>Debet</th>
-                                            <th>Kredit</th>
+                                            <th style="width:40%">Akun</th>
+                                            <th style="width:20%">Debet</th>
+                                            <th style="width:20%">Kredit</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -155,6 +155,11 @@ $(function() {
 
 var urlController = '';
 var submitText = '';
+var statusForm = '';
+var tableContent = '';
+var nomorBarisTabel;
+var rowId;
+var selected;
 
 function getUrl() {
     return urlController;
@@ -169,6 +174,31 @@ function save(id) {
     $("#data-form")[0].reset();
     $(".form-control").removeClass('is-invalid').removeClass('is-valid');
     if (typeof id === 'undefined' || id < 1) { //add
+
+        // table detail
+        statusForm = 'add';
+        $('#tableBody').empty();
+        tableContent = `
+            <tr id="tableRow0">
+                <td>
+                    <select name="akun[]" class="form-select select2" required>
+                        <option value="-1">-</option>
+                        <?php foreach($dataAkun as $row) { ?>
+                        <option value="<?= $row->id ?>"><?= $row->kode . ' - ' . $row->nama  ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                </td>
+                <td>
+                    <input type="text" name="kredit[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                </td>
+                <td>&nbsp;</td>
+            </tr>`;
+        $('#tableBody').append(tableContent);
+        $('.select2').select2({dropdownParent: '#data-modal',});
+
         urlController = '<?= base_url($controller . "/add") ?>';
         submitText = '<?= lang("App.save") ?>';
         $('#model-header').removeClass('bg-info').addClass('bg-success');
