@@ -87,8 +87,8 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="3">
-                                                <a href="#tableRow0" onclick="addRow()" class="btn btn-primary mb-2">Tambah Data</a>
+                                            <td colspan="4">
+                                                <a href="#tableRow0" onclick="addRow()" class="btn btn-sm btn-primary mb-2">Tambah Data</a>
                                             </td>
                                         </tr>
                                     </tfoot>
