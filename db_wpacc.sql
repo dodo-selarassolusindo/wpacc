@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2022 at 05:07 AM
+-- Generation Time: Dec 25, 2022 at 06:50 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -143,8 +143,18 @@ CREATE TABLE `jurnal` (
   `nomor` varchar(7) NOT NULL,
   `tanggal` date NOT NULL,
   `keterangan` text NOT NULL,
-  `bulan_tahun` varchar(4) NOT NULL
+  `bulan_tahun` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `jurnal`
+--
+
+INSERT INTO `jurnal` (`id`, `nomor`, `tanggal`, `keterangan`, `bulan_tahun`) VALUES
+(1, '2212001', '2022-12-25', 'Beli Bahan Bakar', NULL),
+(2, '2212002', '2022-12-25', 'Beli ATK', NULL),
+(3, '2212003', '2022-12-25', 'Bayar Listrik', '1222'),
+(4, '2212004', '2022-12-25', 'Bayar PDAM', '1222');
 
 -- --------------------------------------------------------
 
@@ -337,7 +347,7 @@ ALTER TABLE `grup_akun`
 -- AUTO_INCREMENT for table `jurnal`
 --
 ALTER TABLE `jurnal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `jurnal_detail`
