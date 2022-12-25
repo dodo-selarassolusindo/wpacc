@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 
 use App\Models\JurnalModel;
+use App\Models\AkunModel;
 
 class Jurnal extends BaseController
 {
@@ -17,6 +18,7 @@ class Jurnal extends BaseController
 	{
 	    $this->jurnalModel = new JurnalModel();
        	$this->validation =  \Config\Services::validation();
+		$this->akunModel = new AkunModel();
 
 	}
 
@@ -34,6 +36,7 @@ class Jurnal extends BaseController
             'controller' => 'jurnal',
             'title' => 'Jurnal',
 			'nomor' => $this->jurnalModel->getNomor(date('Y-m-d')),
+			'dataAkun' => $this->akunModel->findAll(),
 		];
 
 		return view('jurnal', $data);
