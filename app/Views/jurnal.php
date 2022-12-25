@@ -119,6 +119,42 @@
 <!-- page script -->
 <?= $this->section("pageScript") ?>
 <script>
+
+var i = 0;
+
+function addRow()
+{
+    // alert('1');
+    ++i;
+    tableContent = `
+        <tr id="tableRow`+i+`">
+            <td>
+                <select name="akun[]" class="form-select select2" required>
+                    <option value="-1">-</option>
+                    <?php foreach($dataAkun as $row) { ?>
+                    <option value="<?= $row->id ?>"><?= $row->kode . ' - ' . $row->nama  ?></option>
+                    <?php } ?>
+                </select>
+            </td>
+            <td>
+                <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+            </td>
+            <td>
+                <input type="text" name="kredit[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+            </td>
+            <td><a href="#" onclick="deleteRow(`+i+`)" class="text-danger">Hapus</a></td>
+        </tr>`;
+    $('#tableBody').append(tableContent);
+    $('.select2').select2({dropdownParent: '#data-modal',});
+}
+
+function deleteRow(index)
+{
+	$('#tableRow'+index).remove();
+    //--i;
+    // calculate();
+}
+
 // dataTables
 $(function() {
     var table = $('#data_table').removeAttr('width').DataTable({
