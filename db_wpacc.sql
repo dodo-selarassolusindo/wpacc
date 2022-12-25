@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2022 at 06:48 PM
+-- Generation Time: Dec 25, 2022 at 05:07 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -24,6 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `akun_backup`
+--
+
+CREATE TABLE `akun_backup` (
+  `id` int(11) NOT NULL,
+  `akun` int(11) NOT NULL,
+  `debet` double NOT NULL,
+  `kredit` double NOT NULL,
+  `kode_tahun` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `akun_baru`
 --
 
@@ -38,6 +52,20 @@ CREATE TABLE `akun_baru` (
   `kredit_ini` double NOT NULL,
   `bulan_tahun` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `akun_baru`
+--
+
+INSERT INTO `akun_baru` (`id`, `grup_akun`, `kode`, `nama`, `debet_lalu`, `kredit_lalu`, `debet_ini`, `kredit_ini`, `bulan_tahun`) VALUES
+(1, 1, '0101', 'KAS TUNAI', 0, 0, 0, 0, '1222'),
+(2, 1, '0102', 'PIUTANG USAHA', 0, 0, 0, 0, '1222'),
+(3, 3, '0103', 'PERSEDIAAN', 0, 0, 0, 0, '1222'),
+(4, 2, '0104', 'PERLENGKAPAN UMUM', 0, 0, 0, 0, '1222'),
+(5, 4, '0201', 'UTANG USAHA', 0, 0, 0, 0, '1222'),
+(6, 7, '0401', 'PENDAPATAN PENJUALAN', 0, 0, 0, 0, '1222'),
+(7, 8, '0501', 'HARGA POKOK PENJUALAN', 0, 0, 0, 0, '1222'),
+(8, 9, '0601', 'BEBAN PERLENGKAPAN UMUM', 0, 0, 0, 0, '1222');
 
 -- --------------------------------------------------------
 
@@ -107,6 +135,34 @@ INSERT INTO `grup_akun` (`id`, `kode`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jurnal`
+--
+
+CREATE TABLE `jurnal` (
+  `id` int(11) NOT NULL,
+  `nomor` varchar(7) NOT NULL,
+  `tanggal` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `bulan_tahun` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurnal_detail`
+--
+
+CREATE TABLE `jurnal_detail` (
+  `id` int(11) NOT NULL,
+  `jurnal` int(11) NOT NULL,
+  `akun` int(11) NOT NULL,
+  `debet` double NOT NULL,
+  `kredit` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `login_attempts`
 --
 
@@ -116,33 +172,6 @@ CREATE TABLE `login_attempts` (
   `login` varchar(100) NOT NULL,
   `time` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rubrik`
---
-
-CREATE TABLE `rubrik` (
-  `id` int(11) NOT NULL,
-  `kode_rubrik` varchar(2) NOT NULL,
-  `nama_rubrik` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `rubrik`
---
-
-INSERT INTO `rubrik` (`id`, `kode_rubrik`, `nama_rubrik`) VALUES
-(1, '01', 'AKTIVA LANCAR'),
-(2, '02', 'AKTIVA TETAP'),
-(3, '03', 'AKTIVA LAIN-LAIN'),
-(4, '11', 'HUTANG JANGKA PENDEK'),
-(5, '12', 'HUTANG JANGKA PANJANG'),
-(6, '13', 'MODAL'),
-(7, '21', 'PENDAPATAN USAHA'),
-(8, '31', 'HARGA POKOK PENJUALAN'),
-(9, '32', 'BIAYA-BIAYA');
 
 -- --------------------------------------------------------
 
@@ -204,6 +233,12 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 --
 
 --
+-- Indexes for table `akun_backup`
+--
+ALTER TABLE `akun_backup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `akun_baru`
 --
 ALTER TABLE `akun_baru`
@@ -228,15 +263,21 @@ ALTER TABLE `grup_akun`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `login_attempts`
+-- Indexes for table `jurnal`
 --
-ALTER TABLE `login_attempts`
+ALTER TABLE `jurnal`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rubrik`
+-- Indexes for table `jurnal_detail`
 --
-ALTER TABLE `rubrik`
+ALTER TABLE `jurnal_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -263,10 +304,16 @@ ALTER TABLE `users_groups`
 --
 
 --
+-- AUTO_INCREMENT for table `akun_backup`
+--
+ALTER TABLE `akun_backup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `akun_baru`
 --
 ALTER TABLE `akun_baru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `akun_lama`
@@ -287,16 +334,22 @@ ALTER TABLE `grup_akun`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `jurnal`
+--
+ALTER TABLE `jurnal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jurnal_detail`
+--
+ALTER TABLE `jurnal_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rubrik`
---
-ALTER TABLE `rubrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`

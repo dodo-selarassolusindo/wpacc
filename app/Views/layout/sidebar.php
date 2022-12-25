@@ -15,6 +15,7 @@
             <!-- Sidebar Menu -->
             <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
+                <!-- dashboard -->
                 <li class="nav-item">
                     <a href="<?= site_url() ?>" class="nav-link <?= $request->uri->getSegment(1) == '' ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-circle"></i>
@@ -24,6 +25,7 @@
                     </a>
                 </li>
 
+                <!-- master -->
                 <li class="nav-item
                 <?php
                 switch ($request->uri->getSegment(1)) {
@@ -61,6 +63,43 @@
                             <a href="<?= site_url('akun') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'akun' ? 'active' : '' ?>">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>Akun</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- transaksi -->
+                <li class="nav-item
+                <?php
+                switch ($request->uri->getSegment(1)) {
+                    case 'transaksibaru':
+                    case 'akun':
+                        echo ' menu-open ';
+                        break;
+                }
+                ?>
+                ">
+                    <a href="javascript:;" class="nav-link
+                    <?php
+                    switch ($request->uri->getSegment(1)) {
+                        case 'transaksibaru':
+                        case 'akun':
+                            echo 'active';
+                            break;
+                    }
+                    ?>
+                    ">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Transaksi
+                            <i class="end fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= site_url('transaksibaru') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'transaksibaru' ? 'active' : '' ?>">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Jurnal</p>
                             </a>
                         </li>
                     </ul>
