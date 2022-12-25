@@ -89,10 +89,10 @@
                                         <tr>
                                             <th style="text-align:right">Total</th>
                                             <td>
-                                                <input type="text" name="debet_total" class="form-control" placeholder="Total Debet" minlength="0"  maxlength="25" required readonly>
+                                                <input type="text" id="total_debet" name="total_debet" class="form-control" placeholder="Total Debet" minlength="0"  maxlength="25" required readonly>
                                             </td>
                                             <td>
-                                                <input type="text" name="kredit_total" class="form-control" placeholder="Total Kredit" minlength="0"  maxlength="25" required readonly>
+                                                <input type="text" id="total_kredit" name="total_kredit" class="form-control" placeholder="Total Kredit" minlength="0"  maxlength="25" required readonly>
                                             </td>
                                             <td>&nbsp;</td>
                                         </tr>
@@ -130,6 +130,20 @@
 <?= $this->section("pageScript") ?>
 <script>
 
+function hitungTotalDebet() // tested, ok
+{
+	var total_debet = 0;
+	$(".debet").each(function(){
+		// totalDebet += parseInt($(this).val().replace(/\D/g,''));
+        total_debet += parseInt($(this).val());
+	});
+
+	$('#total_debet').val(total_debet);
+	// $('#totalbayar_real').val(total_bayar);
+
+	// hitungSisaBayar();
+}
+
 var i = 0;
 
 function addRow()
@@ -147,10 +161,10 @@ function addRow()
                 </select>
             </td>
             <td>
-                <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                <input onkeyup="hitungTotalDebet()" type="text" name="debet[]" class="form-control debet" placeholder="Debet" minlength="0"  maxlength="25" required>
             </td>
             <td>
-                <input type="text" name="kredit[]" class="form-control" placeholder="Kredit" minlength="0"  maxlength="25" required>
+                <input type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
             </td>
             <td><a href="#" onclick="deleteRow(`+i+`)" class="text-danger">Hapus</a></td>
         </tr>`;
@@ -235,10 +249,10 @@ function save(id) {
                     </select>
                 </td>
                 <td>
-                    <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                    <input onkeyup="hitungTotalDebet()" type="text" name="debet[]" class="form-control debet" placeholder="Debet" minlength="0"  maxlength="25" required>
                 </td>
                 <td>
-                    <input type="text" name="kredit[]" class="form-control" placeholder="Kredit" minlength="0"  maxlength="25" required>
+                    <input type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
                 </td>
                 <td>&nbsp;</td>
             </tr>`;
