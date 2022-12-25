@@ -77,7 +77,7 @@
                                 <table id="data_table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width:40%">Akun</th>
+                                            <th style="width:50%">Akun</th>
                                             <th style="width:20%">Debet</th>
                                             <th style="width:20%">Kredit</th>
                                             <th></th>
@@ -86,6 +86,16 @@
                                     <tbody id="tableBody">
                                     </tbody>
                                     <tfoot>
+                                        <tr>
+                                            <th style="text-align:right">Total</th>
+                                            <td>
+                                                <input type="text" name="debet_total" class="form-control" placeholder="Total Debet" minlength="0"  maxlength="25" required readonly>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="kredit_total" class="form-control" placeholder="Total Kredit" minlength="0"  maxlength="25" required readonly>
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
                                         <tr>
                                             <td colspan="4">
                                                 <a href="#tableRow0" onclick="addRow()" class="btn btn-sm btn-primary mb-2">Tambah Data</a>
@@ -140,7 +150,7 @@ function addRow()
                 <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
             </td>
             <td>
-                <input type="text" name="kredit[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                <input type="text" name="kredit[]" class="form-control" placeholder="Kredit" minlength="0"  maxlength="25" required>
             </td>
             <td><a href="#" onclick="deleteRow(`+i+`)" class="text-danger">Hapus</a></td>
         </tr>`;
@@ -228,7 +238,7 @@ function save(id) {
                     <input type="text" name="debet[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
                 </td>
                 <td>
-                    <input type="text" name="kredit[]" class="form-control" placeholder="Debet" minlength="0"  maxlength="25" required>
+                    <input type="text" name="kredit[]" class="form-control" placeholder="Kredit" minlength="0"  maxlength="25" required>
                 </td>
                 <td>&nbsp;</td>
             </tr>`;
