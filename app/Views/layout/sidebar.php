@@ -72,8 +72,7 @@
                 <li class="nav-item
                 <?php
                 switch ($request->uri->getSegment(1)) {
-                    case 'transaksibaru':
-                    case 'akun':
+                    case 'jurnal':
                         echo ' menu-open ';
                         break;
                 }
@@ -82,8 +81,7 @@
                     <a href="javascript:;" class="nav-link
                     <?php
                     switch ($request->uri->getSegment(1)) {
-                        case 'transaksibaru':
-                        case 'akun':
+                        case 'jurnal':
                             echo 'active';
                             break;
                     }
@@ -97,7 +95,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= site_url('transaksibaru') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'transaksibaru' ? 'active' : '' ?>">
+                            <a href="<?= site_url('jurnal') ?>" class="nav-link <?= $request->uri->getSegment(1) == 'jurnal' ? 'active' : '' ?>">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>Jurnal</p>
                             </a>
