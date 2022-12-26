@@ -135,7 +135,7 @@ function hitungTotalKredit() // tested, ok
 	var total_kredit = 0;
 	$(".kredit").each(function(){
 		// totalDebet += parseInt($(this).val().replace(/\D/g,''));
-        total_kredit += parseInt($(this).val());
+        total_kredit += parseFloat($(this).val());
 	});
 
 	$('#total_kredit').val(total_kredit);
@@ -149,7 +149,7 @@ function hitungTotalDebet() // tested, ok
 	var total_debet = 0;
 	$(".debet").each(function(){
 		// totalDebet += parseInt($(this).val().replace(/\D/g,''));
-        total_debet += parseInt($(this).val());
+        total_debet += parseFloat($(this).val());
 	});
 
 	$('#total_debet').val(total_debet);
@@ -331,6 +331,15 @@ function save(id) {
             }
         },
         submitHandler: function(form) {
+
+            // check balance
+            // alert(parseFloat($('#total_debet').val()));
+            // alert(parseFloat($('#total_debet').val()));
+            if (parseFloat($('#total_debet').val()) != parseFloat($('#total_kredit').val())) {
+                alert('Belum Balance, Data Tidak Tersimpan');
+                return false;
+            }
+
             var form = $('#data-form');
             $(".text-danger").remove();
             $.ajax({
