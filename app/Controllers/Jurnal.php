@@ -7,19 +7,22 @@ use App\Controllers\BaseController;
 
 use App\Models\JurnalModel;
 use App\Models\AkunModel;
+use App\Models\JurnaldetailModel;
 
 class Jurnal extends BaseController
 {
 
     protected $jurnalModel;
     protected $validation;
+    protected $akunModel;
+    protected $jurnaldetailModel;
 
 	public function __construct()
 	{
 	    $this->jurnalModel = new JurnalModel();
        	$this->validation =  \Config\Services::validation();
 		$this->akunModel = new AkunModel();
-
+        $this->jurnaldetailModel = new JurnaldetailModel();
 	}
 
 	public function getNomor($tanggal = null)
@@ -121,6 +124,21 @@ $fields['bulan_tahun'] = substr($this->request->getPost('tanggal'), 5, 2) . subs
 
                 $response['success'] = true;
                 $response['messages'] = lang("App.insert-success") ;
+
+                // ambil id data master jurnal terbaru
+                $jurnal = $this->jurnalModel->getInsertID();
+
+                // insert data detail jurnal
+                $data = $this->request->getPost();
+                foreach ($data['akun'] as $key => $item) {
+                    $detail = [
+                        'jurnal' => $jurnal,
+                        'akun' => $item,
+                        'debet' => $data['debet'][$key],
+                        'kredit' => $data['kredit'][$key],
+                    ];
+                    $this->jurnaldetailModel->insert($detail);
+                }
 
             } else {
 
