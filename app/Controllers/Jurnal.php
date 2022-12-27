@@ -158,18 +158,16 @@ $fields['bulan_tahun'] = substr($this->request->getPost('tanggal'), 5, 2) . subs
         $response = array();
 
 		$fields['id'] = $this->request->getPost('id');
-$fields['nomor'] = $this->request->getPost('nomor');
-$fields['tanggal'] = $this->request->getPost('tanggal');
-$fields['keterangan'] = $this->request->getPost('keterangan');
-$fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
-
+        $fields['nomor'] = $this->request->getPost('nomor');
+        $fields['tanggal'] = $this->request->getPost('tanggal');
+        $fields['keterangan'] = $this->request->getPost('keterangan');
+        $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
 
         $this->validation->setRules([
-			            'nomor' => ['label' => 'Nomor', 'rules' => 'required|min_length[0]|max_length[7]'],
+            'nomor' => ['label' => 'Nomor', 'rules' => 'required|min_length[0]|max_length[7]'],
             'tanggal' => ['label' => 'Tanggal', 'rules' => 'required|valid_date|min_length[0]'],
             'keterangan' => ['label' => 'Keterangan', 'rules' => 'required|min_length[0]'],
             'bulan_tahun' => ['label' => 'Bulan & Tahun', 'rules' => 'permit_empty|min_length[0]|max_length[4]'],
-
         ]);
 
         if ($this->validation->run($fields) == FALSE) {
@@ -229,6 +227,9 @@ $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
 
 				$response['success'] = true;
 				$response['messages'] = lang("App.delete-success");
+
+                // hapus data detail jurnal
+                $this->jurnaldetailModel->where('jurnal', $id)->delete();
 
 			} else {
 
