@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2022 at 01:15 AM
+-- Generation Time: Dec 27, 2022 at 04:30 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -154,7 +154,26 @@ INSERT INTO `jurnal` (`id`, `nomor`, `tanggal`, `keterangan`, `bulan_tahun`) VAL
 (1, '2212001', '2022-12-25', 'Beli Bahan Bakar', NULL),
 (2, '2212002', '2022-12-25', 'Beli ATK', NULL),
 (3, '2212003', '2022-12-25', 'Bayar Listrik', '1222'),
-(4, '2212004', '2022-12-25', 'Bayar PDAM', '1222');
+(4, '2212004', '2022-12-25', 'Bayar PDAM', '1222'),
+(5, '2212005', '2022-12-25', '-', '1222'),
+(6, '2212006', '2022-12-25', '--', '1222'),
+(7, '2212007', '2022-12-25', '---', '1222'),
+(8, '2212008', '2022-12-26', 'Testing Data Jurnal', '1222'),
+(10, '2212009', '2022-12-26', 'Kas Keluar', '1222');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurnal_backup`
+--
+
+CREATE TABLE `jurnal_backup` (
+  `id` int(11) NOT NULL,
+  `nomor` varchar(7) NOT NULL,
+  `tanggal` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `bulan_tahun` varchar(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -168,6 +187,59 @@ CREATE TABLE `jurnal_detail` (
   `akun` int(11) NOT NULL,
   `debet` double NOT NULL,
   `kredit` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `jurnal_detail`
+--
+
+INSERT INTO `jurnal_detail` (`id`, `jurnal`, `akun`, `debet`, `kredit`) VALUES
+(1, 8, 1, 100000, 0),
+(2, 8, 6, 0, 100000),
+(7, 10, 8, 1250000, 0),
+(8, 10, 8, 1350000, 0),
+(9, 10, 1, 0, 2600000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurnal_detail_backup`
+--
+
+CREATE TABLE `jurnal_detail_backup` (
+  `id` int(11) NOT NULL,
+  `jurnal` int(11) NOT NULL,
+  `akun` int(11) NOT NULL,
+  `debet` double NOT NULL,
+  `kredit` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurnal_detail_lama`
+--
+
+CREATE TABLE `jurnal_detail_lama` (
+  `id` int(11) NOT NULL,
+  `jurnal` int(11) NOT NULL,
+  `akun` int(11) NOT NULL,
+  `debet` double NOT NULL,
+  `kredit` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurnal_lama`
+--
+
+CREATE TABLE `jurnal_lama` (
+  `id` int(11) NOT NULL,
+  `nomor` varchar(7) NOT NULL,
+  `tanggal` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `bulan_tahun` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -279,9 +351,33 @@ ALTER TABLE `jurnal`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jurnal_backup`
+--
+ALTER TABLE `jurnal_backup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jurnal_detail`
 --
 ALTER TABLE `jurnal_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jurnal_detail_backup`
+--
+ALTER TABLE `jurnal_detail_backup`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jurnal_detail_lama`
+--
+ALTER TABLE `jurnal_detail_lama`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jurnal_lama`
+--
+ALTER TABLE `jurnal_lama`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -347,12 +443,36 @@ ALTER TABLE `grup_akun`
 -- AUTO_INCREMENT for table `jurnal`
 --
 ALTER TABLE `jurnal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `jurnal_backup`
+--
+ALTER TABLE `jurnal_backup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jurnal_detail`
 --
 ALTER TABLE `jurnal_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `jurnal_detail_backup`
+--
+ALTER TABLE `jurnal_detail_backup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jurnal_detail_lama`
+--
+ALTER TABLE `jurnal_detail_lama`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jurnal_lama`
+--
+ALTER TABLE `jurnal_lama`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
