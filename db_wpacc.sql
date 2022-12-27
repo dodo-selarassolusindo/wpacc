@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2022 at 04:30 AM
+-- Generation Time: Dec 27, 2022 at 04:50 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_wpacc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adjustment`
+--
+
+CREATE TABLE `adjustment` (
+  `id` int(11) NOT NULL,
+  `akun` int(11) NOT NULL,
+  `debet` double NOT NULL,
+  `kredit` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -315,6 +328,12 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 --
 
 --
+-- Indexes for table `adjustment`
+--
+ALTER TABLE `adjustment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `akun_backup`
 --
 ALTER TABLE `akun_backup`
@@ -408,6 +427,12 @@ ALTER TABLE `users_groups`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `adjustment`
+--
+ALTER TABLE `adjustment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `akun_backup`
