@@ -184,6 +184,24 @@ $fields['bulan_tahun'] = $this->request->getPost('bulan_tahun');
                 $response['success'] = true;
                 $response['messages'] = lang("App.update-success");
 
+                // ambil id master jurnal yang terupdate
+                $jurnal = $this->request->getPost('id');;
+
+                // hapus data detail jurnal yang lama
+                $this->jurnaldetailModel->where('jurnal', $jurnal)->delete();
+
+                // insert data detail jurnal yang baru
+                $data = $this->request->getPost();
+                foreach ($data['akun'] as $key => $item) {
+                    $detail = [
+                        'jurnal' => $jurnal,
+                        'akun' => $item,
+                        'debet' => $data['debet'][$key],
+                        'kredit' => $data['kredit'][$key],
+                    ];
+                    $this->jurnaldetailModel->insert($detail);
+                }
+
             } else {
 
                 $response['success'] = false;
