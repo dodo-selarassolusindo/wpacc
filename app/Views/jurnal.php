@@ -298,11 +298,53 @@ function save(id) {
                 $("#form-btn").text(submitText);
                 $('#data-modal').modal('show');
                 //insert data to form
-                $("#data-form #id").val(response.id);
-                $("#data-form #nomor").val(response.nomor);
-                $("#data-form #tanggal").val(response.tanggal);
-                $("#data-form #keterangan").val(response.keterangan);
-                $("#data-form #bulan_tahun").val(response.bulan_tahun);
+                $("#data-form #id").val(response.jurnal.id);
+                $("#data-form #nomor").val(response.jurnal.nomor);
+                $("#data-form #tanggal").val(response.jurnal.tanggal);
+                $("#data-form #keterangan").val(response.jurnal.keterangan);
+                $("#data-form #bulan_tahun").val(response.jurnal.bulan_tahun);
+
+                $('#tableBody').empty();
+                tableContent = '';
+                nomorBarisTabel = 0;
+                response.jurnal_detail.forEach(function(row) {
+                    // console.log(row.id);
+                    rowId = '';
+                    selected = '';
+                    tableContent += `
+                        <tr id="tableRow`+nomorBarisTabel+`">
+                            <td>
+                                <select name="akun[]" class="form-select select2" required>
+                                    <option value="-1">-</option>
+                                    <?php foreach($dataAkun as $row) { ?>
+                                    `;
+                                    rowId = <?= $row->id ?>;
+                                    selected = rowId == row.akun ? 'selected' : '';
+                                    tableContent += `
+                                    <option value="<?= $row->id ?>" `+selected+`><?= $row->kode . ' - ' . $row->nama  ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td>
+                                <input value="`+row.debet+`" onkeyup="hitungTotalDebet()" type="text" name="debet[]" class="form-control debet" placeholder="Debet" minlength="0"  maxlength="25" required>
+                            </td>
+                            <td>
+                                <input value="`+row.kredit+`" onkeyup="hitungTotalKredit()" type="text" name="kredit[]" class="form-control kredit" placeholder="Kredit" minlength="0"  maxlength="25" required>
+                            </td>`;
+                            if (nomorBarisTabel == 0) {
+                                tableContent += `
+                                <td>&nbsp;</td>`;
+                            } else {
+                                tableContent += `
+                                <td><a href="#" onclick="deleteRow(`+nomorBarisTabel+`)" class="text-danger">Hapus</a></td>`;
+                            }
+                            tableContent += `
+                        </tr>`;
+                    nomorBarisTabel++;
+                });
+
+                $('#tableBody').append(tableContent);
+                $('.select2').select2({dropdownParent: '#data-modal',});
 
             }
         });

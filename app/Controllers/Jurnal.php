@@ -84,7 +84,9 @@ $value->keterangan,
 
 		if ($this->validation->check($id, 'required|numeric')) {
 
-			$data = $this->jurnalModel->where('id' ,$id)->first();
+			// $data = $this->jurnalModel->where('id' ,$id)->first();
+            $data['jurnal'] = $this->jurnalModel->where('id' ,$id)->first();
+            $data['jurnal_detail'] = $this->jurnaldetailModel->where('jurnal', $id)->findAll();
 
 			return $this->response->setJSON($data);
 
