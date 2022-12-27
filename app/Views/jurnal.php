@@ -345,6 +345,8 @@ function save(id) {
 
                 $('#tableBody').append(tableContent);
                 $('.select2').select2({dropdownParent: '#data-modal',});
+                hitungTotalDebet();
+                hitungTotalKredit();
 
             }
         });
