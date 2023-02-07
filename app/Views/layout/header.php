@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <title><?= 'Accounting v1.0' . ($title != 'Dashboard' ? ' - ' . esc($title) : '') ?></title> -->
-    <title><?= 'Accounting v1.0x - ' . esc($title) ?></title>
+    <title><?= 'Accounting v1.0 - ' . esc($title) ?></title>
     <meta name="description" content="Accounting v1.0">
     <meta name="keyword" content="selaras,solusindo,selusin,accounting,aplikasi,akuntansi">
     <meta name="author" content="selaras solusindo">
