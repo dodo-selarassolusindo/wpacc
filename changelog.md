@@ -7,7 +7,7 @@ fitur-fitur ::
 
 ---
 
-## [unreleased] 2025-08-19
+## [unreleased]
 
 ### added
 - 19-08-2025 14:24
